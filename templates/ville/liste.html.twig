@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les villes — AirOpale{% endblock %}
+
+{% block body %}
+    <h1>Les villes</h1>
+
+    <table>
+        <thead>
+            <tr><th>Ville</th><th>Latitude</th><th>Longitude</th></tr>
+        </thead>
+        <tbody>
+            {% for ville in villes %}
+                <tr>
+                    {# ville.nom : Twig appelle getNom() tout seul. #}
+                    <td><a href="{{ path('ville_fiche', {id: ville.id}) }}">{{ ville.nom }}</a></td>
+                    <td>{{ ville.latitude }}</td>
+                    <td>{{ ville.longitude }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="discret">{{ villes|length }} villes.</p>
+{% endblock %}

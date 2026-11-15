@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ ville.nom }} — AirOpale{% endblock %}
+
+{% block body %}
+    <p><a href="{{ path('ville_liste') }}">← Toutes les villes</a></p>
+
+    <h1>{{ ville.nom }}</h1>
+    <p class="discret">Latitude {{ ville.latitude }} · longitude {{ ville.longitude }}</p>
+
+    <div class="cartes">
+        {# B2 — la météo, telle que la renvoie ClientMeteo::meteoActuelle(). #}
+        <section class="carte">
+            <h2>Météo</h2>
+            <p class="grand">{{ meteo.temperature }} °C</p>
+            <p>{{ meteo.libelle }} · vent {{ meteo.vent }} km/h
+                {%- if meteo.vent > 50 %} · <strong>vent fort</strong>{% endif %}</p>
+            <p class="discret">Mesure de {{ meteo.heure|date('H:i') }} · source : {{ meteo.origine }}
+                (API appelée à {{ meteo.recupereLe|date('H:i') }})</p>
+        </section>
+
+        {# B3 — la qualité de l'air, et son badge. #}
+        <section class="carte">
+            <h2>Qualité de l'air</h2>
+            <p>
+                <span class="badge badge-{{ niveau.classe }}">{{ niveau.libelle }}</span>
+                indice européen {{ air.indice }}
+            </p>
+            <p>PM2.5 : {{ air.pm25 }} µg/m³<br>PM10 : {{ air.pm10 }} µg/m³<br>NO₂ : {{ air.no2 }} µg/m³</p>
+            <p class="discret">Mesure de {{ air.heure|date('H:i') }} · source : {{ air.origine }}
+                (API appelée à {{ air.recupereLe|date('H:i') }})</p>
+        </section>
+    </div>
+{% endblock %}
